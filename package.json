@@ -12,6 +12,11 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "pkg": {
+    "assets": [
+      "ms-playwright/**/*"
+    ]
+  },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/screenshot-desktop": "^1.15.0",

@@ -1,6 +1,12 @@
 import { chromium, devices, Page, BrowserContext } from "playwright";
 import screenshot from "screenshot-desktop";
 import fs from "fs-extra";
+import path from "path";
+
+process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(
+  process.cwd(),
+  "ms-playwright"
+);
 
 const variations = [
   { lang: "ar", theme: "dark" },
@@ -9,10 +15,13 @@ const variations = [
   { lang: "en", theme: "light" },
 ];
 
-const START_URL =
-  "https://stage.tamm.abudhabi/wb/ssa/social-support-service/request-social-support/start";
-const LOGIN_URL =
-  "https://stage.tamm.abudhabi/services/auth/login?eid=784197952602130";
+if (process.argv.length < 4) {
+  console.error("Usage: ts-node src/index.ts <LOGIN_URL> <START_URL>\n\n");
+  process.exit(1);
+}
+
+const LOGIN_URL = process.argv[2];
+const START_URL = process.argv[3];
 
 const SCREENSHOT_DIR = "./screenshots";
 
@@ -45,9 +54,7 @@ async function toggleTheme(page: Page, theme: string, type: ScreenshotType) {
 }
 
 async function zoomOut(page: Page, zoom = "70%") {
-  await page.evaluate((z) => {
-    document.body.style.zoom = z;
-  }, zoom);
+  await page.evaluate(`document.body.style.zoom = "${zoom}"`);
 }
 
 async function handleWealthPage(page: Page) {
