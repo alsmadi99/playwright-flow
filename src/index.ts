@@ -3,10 +3,10 @@ import screenshot from "screenshot-desktop";
 import fs from "fs-extra";
 
 const variations = [
-  { lang: "ar", theme: "light" },
   { lang: "ar", theme: "dark" },
-  { lang: "en", theme: "light" },
+  { lang: "ar", theme: "light" },
   { lang: "en", theme: "dark" },
+  { lang: "en", theme: "light" },
 ];
 
 const START_URL =
@@ -27,11 +27,11 @@ async function authenticateAndStart(page: Page) {
   });
 }
 
-async function applyTheme(page: Page, theme: string, type: ScreenshotType) {
-  if (type === "desktop" && theme === "dark") {
+async function toggleTheme(page: Page, theme: string, type: ScreenshotType) {
+  if (type === "desktop") {
     await page.click('button[aria-label="header-theme-menu"]');
   }
-  if ((type === "ios" || type === "android") && theme === "dark") {
+  if (type === "ios" || type === "android") {
     await page.click('div[aria-label="side-menu"]');
     // wait for the menu to open
     await page.waitForSelector("div.ui-lib-header-side-menu__header-icon", {
@@ -75,6 +75,7 @@ async function takeMobileScreenshot(page: Page, filePath: string) {
   await page.screenshot({ path: filePath, fullPage: true });
   console.log(`✅ Mobile Captured: ${filePath}`);
 }
+
 async function captureBreadcrumbScreenshots(page: Page) {
   console.log(`🔍 [desktop] Capturing breadcrumb screenshots...`);
 
@@ -103,7 +104,7 @@ async function captureBreadcrumbScreenshots(page: Page) {
         ? `${href}&lang=${lang}`
         : `${href}?lang=${lang}`;
       await page.goto(url);
-      await page.waitForTimeout(2500); // wait for potential animations
+      await page.waitForTimeout(2500);
 
       const pageRoute = url.split("?")[0].split("/").pop();
       const fileName = `${folder}/${
@@ -120,7 +121,7 @@ async function captureBreadcrumbScreenshots(page: Page) {
 }
 
 async function processFlow(
-  context: BrowserContext,
+  _context: BrowserContext,
   page: Page,
   type: ScreenshotType
 ) {
@@ -139,7 +140,8 @@ async function processFlow(
         state: "visible",
         timeout: 10000,
       });
-      await applyTheme(page, theme, type);
+
+      await toggleTheme(page, theme, type);
 
       if (type === "desktop") {
         await zoomOut(page);
@@ -195,27 +197,27 @@ async function processFlow(
     ],
   });
 
-  // // Desktop flow
-  // const desktopContext = await browser.newContext();
-  // const desktopPage = await desktopContext.newPage();
-  // await authenticateAndStart(desktopPage);
-  // await processFlow(desktopContext, desktopPage, "desktop");
+  // Desktop flow
+  const desktopContext = await browser.newContext();
+  const desktopPage = await desktopContext.newPage();
+  await authenticateAndStart(desktopPage);
+  await processFlow(desktopContext, desktopPage, "desktop");
 
-  // // Mobile flow Android
-  // const mobileContextIos = await browser.newContext({
-  //   ...devices["iPhone 12"],
-  // });
-  // const mobilePageIos = await mobileContextIos.newPage();
-  // await authenticateAndStart(mobilePageIos);
-  // await processFlow(mobileContextIos, mobilePageIos, "ios");
+  // Mobile flow Android
+  const mobileContextIos = await browser.newContext({
+    ...devices["iPhone 12"],
+  });
+  const mobilePageIos = await mobileContextIos.newPage();
+  await authenticateAndStart(mobilePageIos);
+  await processFlow(mobileContextIos, mobilePageIos, "ios");
 
-  // // Mobile flow Ios
-  // const mobileContextAndroid = await browser.newContext({
-  //   ...devices["Galaxy S24"],
-  // });
-  // const mobilePageAndroid = await mobileContextAndroid.newPage();
-  // await authenticateAndStart(mobilePageAndroid);
-  // await processFlow(mobileContextAndroid, mobilePageAndroid, "android");
+  // Mobile flow Ios
+  const mobileContextAndroid = await browser.newContext({
+    ...devices["Galaxy S24"],
+  });
+  const mobilePageAndroid = await mobileContextAndroid.newPage();
+  await authenticateAndStart(mobilePageAndroid);
+  await processFlow(mobileContextAndroid, mobilePageAndroid, "android");
 
   // Breadcrumb flow (desktop only)
   const breadcrumbContext = await browser.newContext();
