@@ -6,7 +6,7 @@
     "build": "tsc",
     "dev": "ts-node -r tsconfig-paths/register src/index.ts",
     "start": "node dist/index.js",
-    "package": "pkg dist/index.js --targets node18-win-x64 --output tamm-screenshot.exe"
+    "package": "pkg dist/index.js --targets node18-win-x64 --output screenshot.exe"
   },
   "keywords": [],
   "author": "",

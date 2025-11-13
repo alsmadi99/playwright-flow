@@ -142,5 +142,5 @@ vite.config.ts.timestamp-*
 
 
 screenshots
-tamm-screenshot.exe
+**/*.exe
 ms-playwright
