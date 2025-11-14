@@ -40,7 +40,9 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "docx": "^9.5.1",
     "fs-extra": "^11.3.2",
+    "image-size": "^2.0.2",
     "playwright": "^1.56.1",
     "robotjs": "^0.6.0",
     "screenshot-desktop": "^1.15.3"
