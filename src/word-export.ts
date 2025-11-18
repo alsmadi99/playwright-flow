@@ -81,7 +81,7 @@ export const generateWordFiles = async (): Promise<void> => {
           const stepFolder = path.join(folder, dirent.name);
           const stepFiles = await fs.readdir(stepFolder);
           for (const f of stepFiles) {
-            if (f.endsWith(`_${theme}.png`)) {
+            if (f.includes(`_${theme}_`)) {
               themeScreenshots.push(path.join(stepFolder, f));
             }
           }
@@ -93,7 +93,7 @@ export const generateWordFiles = async (): Promise<void> => {
       const doc = new Document({
         sections: [
           {
-            children: themeScreenshots.flatMap((filePath, idx) => {
+            children: themeScreenshots.flatMap((filePath) => {
               const imageBuffer = fs.readFileSync(filePath);
 
               // 💻 Scale down desktop screenshots if too wide
@@ -120,9 +120,6 @@ export const generateWordFiles = async (): Promise<void> => {
                       type: "png",
                     }),
                   ],
-                }),
-                new Paragraph({
-                  text: `Screenshot ${idx + 1} - ${type} ${theme}`,
                 }),
               ];
             }),

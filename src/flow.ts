@@ -8,7 +8,7 @@ import { takeWindowScreenshot } from "./screenshots";
 const takeScrollingScreenshots = async (
   page: Page,
   folder: string,
-  baseName: string
+  baseName: string,
 ) => {
   let index = 1;
   let maxLoops = 20; // safety limit
@@ -45,7 +45,7 @@ const takeScrollingScreenshots = async (
 const processFlow = async (
   _context: BrowserContext,
   page: Page,
-  type: ScreenshotType
+  type: ScreenshotType,
 ) => {
   let step = 1;
 
@@ -79,7 +79,7 @@ const processFlow = async (
       await takeScrollingScreenshots(
         page,
         folder,
-        `${pageRoute}_${lang}_${theme}_full`
+        `${pageRoute}_${lang}_${theme}_full`,
       );
     }
 

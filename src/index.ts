@@ -1,4 +1,4 @@
-import { chromium, devices } from "playwright";
+import { chromium } from "playwright";
 import fs from "fs-extra";
 import path from "path";
 
@@ -10,7 +10,7 @@ import { generateWordFiles } from "./word-export";
 
 process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(
   process.cwd(),
-  "ms-playwright"
+  "ms-playwright",
 );
 
 if (process.argv.length < 4) {

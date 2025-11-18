@@ -1,7 +1,7 @@
 import { Page } from "playwright";
 import { ScreenshotType } from "../types";
 
-export const zoomOut = async (page: Page, zoom = "70%") => {
+export const zoomOut = async (page: Page, zoom = "80%") => {
   await page.evaluate(`document.body.style.zoom = "${zoom}"`);
 };
 
@@ -24,7 +24,7 @@ export const handleWealthPage = async (page: Page) => {
 export const toggleTheme = async (
   page: Page,
   theme: string,
-  type: ScreenshotType
+  type: ScreenshotType,
 ) => {
   if (type === "desktop") {
     await page.click('button[aria-label="header-theme-menu"]');

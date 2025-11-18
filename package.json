@@ -7,7 +7,10 @@
     "build": "tsc",
     "dev": "ts-node -r tsconfig-paths/register index.ts",
     "start": "node dist/index.js",
-    "package": "pkg dist/index.js --targets node18-win-x64 --output screenshot.exe"
+    "package": "pkg dist/index.js --targets node18-win-x64 --output screenshot.exe",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky"
   },
   "keywords": [
     "automation",
@@ -32,13 +35,28 @@
       "ms-playwright/**/*"
     ]
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@eslint/json": "^0.14.0",
+    "@eslint/markdown": "^7.5.1",
     "@types/fs-extra": "^11.0.4",
     "@types/screenshot-desktop": "^1.15.0",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "jiti": "^2.6.1",
+    "lint-staged": "^16.2.6",
     "nodemon": "^3.1.11",
+    "prettier": "3.6.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.47.0"
   },
   "dependencies": {
     "docx": "^9.5.1",

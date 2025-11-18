@@ -41,7 +41,7 @@ export const captureBreadcrumbScreenshots = async (page: Page) => {
 
       const pageRoute = url.split("?")[0].split("/").pop();
       const fileName = `${folder}/${
-        !!pageRoute ? pageRoute : "Home"
+        pageRoute ? pageRoute : "Home"
       }_${lang}.png`;
 
       await zoomOut(page);
