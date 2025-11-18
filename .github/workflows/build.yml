@@ -28,8 +28,7 @@ jobs:
         run: npm run lint
 
   build:
-    runs-on: windows-latest
-
+    needs: check
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
