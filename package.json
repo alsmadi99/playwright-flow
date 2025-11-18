@@ -10,7 +10,9 @@
     "package": "pkg dist/index.js --targets node18-win-x64 --output screenshot.exe",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "automation",
@@ -36,7 +38,8 @@
     ]
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write --ignore-unknown",
+    "**/*.{ts,js,json,md}": "eslint --fix"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
